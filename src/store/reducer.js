@@ -1,6 +1,6 @@
 const defaultState = {
-  inputValue: '123',
-  list: [1, 2]
+  inputValue: '',
+  list: []
 };
 // reducer can only receive state, but it can not modify it
 export default (state = defaultState, action) => {
@@ -13,7 +13,10 @@ export default (state = defaultState, action) => {
       // const newState = JSON.parse(JSON.stringify(state));
       newState.list.push(newState.inputValue);
       newState.inputValue = '';
-      return newState
+      return newState;
+    case 'delete_todo_item':
+      newState.list.splice(action.index, 1);
+      return newState;
   }
   return state;
 }
