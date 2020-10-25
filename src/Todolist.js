@@ -7,13 +7,39 @@ export default class Todolist extends Component {
   constructor(props){
     super(props);
     this.state = store.getState();
+    store.subscribe(this.handleStoreChange);
+  }
+  handleStoreChange = (e) => {
+    this.setState(store.getState());
+  }
+  handleInputChange = (e) => {
+    // create an action to communicate with store
+    const action = {
+      type: 'change_input_val',
+      value: e.target.value
+    }
+    store.dispatch(action);
+  }
+  handleBtnClick = (e) => {
+    const action = {
+      type: 'add_todo_item',
+    }
+    store.dispatch(action);
   }
   render() {
     return (
       <div style={{ marginTop: "10px", marginLeft: "10px" }}>
         <div>
-          <Input value={this.state.inputValue} placeholder="todo info" style={{width: "300px", marginRight: "10px"}}/>
-          <Button type="primary">Add Todo Item</Button>
+          <Input 
+            value={this.state.inputValue} 
+            placeholder="todo info" 
+            style={{width: "300px", marginRight: "10px"}}
+            onChange={this.handleInputChange}
+          />
+          <Button 
+            type="primary"
+            onClick={this.handleBtnClick}
+          >Add Todo Item</Button>
         </div>
         <List
           style={{ width: "300px", marginTop: "10px" }}
