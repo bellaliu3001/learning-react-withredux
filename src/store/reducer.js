@@ -1,4 +1,4 @@
-import { CHANGE_INPUT_VAL, ADD_TODO_ITEM, DELETE_TODO_ITEM } from './actionTypes'
+import { CHANGE_INPUT_VAL, ADD_TODO_ITEM, DELETE_TODO_ITEM, INIT_LIST } from './actionTypes'
 
 const defaultState = {
   inputValue: '',
@@ -18,6 +18,9 @@ export default (state = defaultState, action) => {
       return newState;
     case DELETE_TODO_ITEM:
       newState.list.splice(action.index, 1);
+      return newState;
+    case INIT_LIST:
+      newState.list = action.data;
       return newState;
   }
   return state;
