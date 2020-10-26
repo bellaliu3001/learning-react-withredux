@@ -2,21 +2,19 @@ import React, { Component } from 'react';
 import 'antd/dist/antd.css'; 
 
 import store from './store/index';
-import { getInputChangeAction, getAddItemAction, getDeleteItemAction, initListAction } from './store/actionCreators'
+import { getInputChangeAction, getAddItemAction, getDeleteItemAction, getTodoList } from './store/actionCreators'
 import TodolistUI from './TodolistUI';
-import axios from 'axios';
+
 
 export default class Todolist extends Component {
   constructor(props){
     super(props);
     this.state = store.getState();
-    store.subscribe(this.handleStoreChange);
   }
   componentDidMount() {
-    axios.get('/api/todolist').then((res) => {
-      const action = initListAction(res.data);
-      store.dispatch(action);
-    })
+    store.subscribe(this.handleStoreChange);
+    const action = getTodoList();
+    store.dispatch(action);
   }
   handleStoreChange = (e) => {
     this.setState(store.getState());
